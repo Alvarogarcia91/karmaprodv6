@@ -82,7 +82,7 @@ DATABASES = {
         'NAME': 'postgres',
         'USER': 'postgres',
         'PASSWORD': 'Hre2x4evJVMnDdqH',
-        'HOST': '3.22.19.134',
+        'HOST': '18.189.242.102',
         'PORT': 5432,
     }
 }
@@ -90,6 +90,8 @@ DATABASES = {
 #ip de prod
 # 3.22.19.134
 
+#ip de DEV
+#18.189.242.102
 
 # Password validation
 # https://docs.djangoproject.com/en/2.2/ref/settings/#auth-password-validators
