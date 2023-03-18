@@ -1,0 +1,131 @@
+{% extends "base.html" %}
+{% block content %}
+
+
+<br>
+<br>
+<!-- 
+<h1 class="text-left my_title text-primary" ><b> Ordenes Pendientes </b></h1>
+<br> -->
+<!-- <hr class="style1">
+    <h3 class="text-left my_title text-info"> <b>Corridas en Producción </b></h3>
+    {% for corrida in corridas_en_produccion %}
+    <table class="table table-hover" >
+        <thead >
+            <tr>
+            <th class="text-center" > No.Orden</th>
+            <th class="text-center" > Tipo de espuma</th>
+            <th class="text-center" > Descripcion </th>
+            <th class="text-center" > Tipo de unidad </th>
+            <th class="text-center" > Forma </th>
+            <th class="text-center" > Cantidad </th>
+            
+            </tr>
+        </thead>
+
+        <tbody>
+            
+           
+            {% for elementoCorrida in corrida.elementocorrida_set.all %}
+
+            <tr>
+                <td class="text-center" >{{ elementoCorrida.corrida }}</td>
+                <td class="text-center" >{{ elementoCorrida.bloqueMedidas.tipo_de_espuma }}</td>
+                <td class="text-center" >{{ elementoCorrida.bloqueMedidas.descripcion }}</td>
+                <td class="text-center" >{{ elementoCorrida.bloqueMedidas.tipo_de_unidad }}</td>
+                <td class="text-center" >{{ elementoCorrida.bloqueMedidas.forma }}</td>
+                <td class="text-center" >{{ elementoCorrida.cantidad }}</td>
+                
+            </tr>
+            {% endfor %}
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>Area de curado estimada: </td>
+                <td>{{ corrida.area_de_curado_estimada }} m<sup>2</sup></td>
+            </tr>
+        </tbody>
+    </table>
+    
+  
+    <hr class="style4">
+    <br>
+    {% endfor %}
+    <hr class="style7">-->
+    <br>
+    <h1 class="text-right text-secondary"> <b> Ordenes Pendientes </b></h1>
+    <br>  
+    {% if not corridas_pendientes%}
+    <!-- Si no hay corridas pendientes -->
+    <div>
+        <div class="text-center">
+            <br>
+            <br>
+            <h2 class="text-center my_title">
+                No hay ordenes Pendientes actualmente.
+            </h2>
+            <br>
+            <br>
+        </div>
+    </div>
+    {% else %}
+    <!-- <h3 class="text-left my_title text-info" > <b> Corridas Pendientes </b></h3> -->
+    {% for corrida in corridas_pendientes %}
+    <h3>No de orden: {{corrida.id}}</h3>
+    <h3>Fecha programada: {{corrida.fecha_programada.date}}</h3>
+    <table class="table table-hover table-sm" >
+        <thead>
+            <tr>
+            <th class="text-center"> Tipo de espuma</th>
+            <th class="text-center"> Descripcion </th>
+            <th class="text-center"> Tipo de unidad </th>
+            <th class="text-center"> Forma </th>
+            <th class="text-center"> Cantidad </th>
+            <th class="text-center"> Remover </th>
+            </tr>
+        </thead>
+
+        <tbody>
+            <form action="{% url 'corrida:editar_cantidades_corrida' %}" method="POST">
+              {% csrf_token %}
+            {% for elementoCorrida in corrida.elementocorrida_set.all %}
+
+            <tr>
+                <td class="text-center" >{{ elementoCorrida.bloqueMedidas.tipo_de_espuma.tipo_de_espuma }}</td>
+                <td class="text-center" >{{ elementoCorrida.bloqueMedidas.descripcion }}</td>
+                <td class="text-center" >{{ elementoCorrida.bloqueMedidas.tipo_de_unidad }}</td>
+                <td class="text-center" >{{ elementoCorrida.bloqueMedidas.forma }}</td>
+                <td class="text-center" >
+                    <input type="text" size="5" id="{{elementoCorrida.cantidad}}" name="cantidades" value="{{ elementoCorrida.cantidad }}">
+                    <input type="hidden" id ="{{elementoCorrida.id}}" name="elementoIds" value="{{elementoCorrida.id}}">
+                </td>
+                <td class="text-center" >
+                    <a class="btn btn-danger" href="{% url 'corrida:remover_elemento_corrida' elementoCorrida.id %}" role="button"> Remover  </a>
+                </td>
+            </tr>
+            {% endfor %}
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>Area de curado estimada: </td>
+                <td>{{ corrida.area_de_curado_estimada }} m<sup>2</sup></td>
+            </tr>
+        </tbody>
+    </table>
+    <!-- este boton de summit truena  input type="submit" class="btn btn-warning" value="Producir Orden" -->
+    <a class="btn btn-success" href="{%url 'corrida:producir_corrida' corrida.id %}" role="button"> Producir Orden  </a>
+    <a class="btn btn-info" href="{% url 'corrida:cancelar_corrida' corrida.id %}" role="button"> Cancelar  </a>
+    <input type="submit" class="btn btn-warning" value="Cambiar Cantidades">
+    </form>
+    <hr class="style4">
+    <br>
+    {% endfor %}
+    {% endif %}
+
+
+   
+{%endblock%}

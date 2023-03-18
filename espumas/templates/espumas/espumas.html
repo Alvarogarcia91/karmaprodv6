@@ -1,0 +1,81 @@
+{% extends "base.html" %}
+{% block content %} 
+<h1 class="text-right text-secondary"><b> Corrida nueva </b></h1>
+<div class="dropdown show">
+    <a class="btn btn-info dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+      Tipos De Espuma
+    </a>
+    <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+        {% for tipo_de_espuma in tipos_de_espuma %}
+        <a class="dropdown-item"  href="{% url 'corrida:nueva_corrida' forma_id tipo_de_espuma.id %}"> {{tipo_de_espuma}}</a>
+        {% endfor %}
+    </div>
+    <a class="btn btn-success" href="{% url 'corrida:nueva_corrida' forma_id %}" role="button"> Mostrar todos </a>
+<br>
+
+<table class="table table-hover table-sm" >
+        <thead>
+          <tr>
+            <th class="text-center align-middle">Tipo espuma</th>
+            <th class="text-center align-middle">Medidas Descripcion </th>
+            <th class="text-center align-middle">Familia</th> 
+            <th class="text-center align-middle">Forma</th> 
+            <!-- <th class="text-center align-middle">Borrar </th> -->
+            <th class="text-center align-middle ">Agregar a Corrida</th>
+          </tr>
+        </thead>
+        <tbody>
+            {% for bloque in bloques_medidas%}
+        <tr>
+            <td class="text-center align-middle" >{{ bloque.tipo_de_espuma }}</td>
+            <td class="text-center align-middle" ><a href="{% url 'espumas:detalle_medidas' bloque.id %} "> {{ bloque.descripcion}} </a></td>
+            <td class="text-center align-middle" >{{ bloque.familia_de_medidas }}</td>
+            <td class="text-center align-middle" >{{ bloque.forma }}</td>
+            <!-- <td class="text-center align-middle" ><a class="btn btn-danger" href="{% url 'espumas:borrar_medidas' bloque.id %}" role="button"> Borrar </a></td> -->
+                {% if conflicto %}
+                <td class="text-center align-middle " ><a class="btn btn-secondary disabled" href="{% url 'corrida:agregar_a_corrida' bloque.id  %}" role="button"> No es posible agregar </a></td>
+                {% else %}
+                <td class="text-center align-middle" ><a class="btn btn-success" href="{% url 'corrida:agregar_a_corrida' bloque.id  %}" role="button"> Agregar A Corrida </a></td>
+                {% endif %}
+            {% endfor %}
+        </tr>
+        </tbody>
+    </table>
+<br>
+<hr class="style1">
+<h4 class="text-primary"> <b> Pre Orden de Corrida </b></h4>
+    <table class="table table-hover" >
+        <thead>
+            <tr>
+                <th class="text-center align-middle"><b> Tipo de espuma </b></th>
+                <th class="text-center align-middle"><b> Descripcion </b></th>
+                <th class="text-center align-middle"><b> Tipo de unidad </b></th>
+                <th class="text-center align-middle"><b> Forma </b></th>
+                <th class="text-center align-middle"><b> Cantidad </b></th>
+                <th class="text-center align-middle"><b> Remover </b></th>
+            </tr>
+        </thead>
+        <tbody>
+            <form action="{% url 'corrida:orden_de_corrida' %}" method="POST">
+            {% csrf_token %}
+            <label class="col-sm-2 col-form-label"><b> Fecha a producir:</b></label> 
+            <input required type="date" name="fecha_programada">
+            {% for elementoCorrida in elementos_corrida %}
+            <tr>
+                <td class="text-center">{{ elementoCorrida.bloqueMedidas.tipo_de_espuma }}</td>
+                <td class="text-center">{{ elementoCorrida.bloqueMedidas.descripcion }}</td>
+                <td class="text-center">{{ elementoCorrida.bloqueMedidas.tipo_de_unidad }}</td>
+                <td class="text-center">{{ elementoCorrida.bloqueMedidas.forma }}</td>
+                <td class="text-center"> 
+                    <input type="text" size="3" id="{{elementoCorrida.cantidad}}" name="cantidades" value="{{ elementoCorrida.cantidad }}">
+                    <input type="hidden" id ="{{elementoCorrida.id}}" name="elementoIds" value="{{elementoCorrida.id}}"> </td>
+                <td class="text-center"> <a class="btn btn-danger" href="{% url 'corrida:remover_elemento_corrida' elementoCorrida.id %}" role="button"> Remover  </a> </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <input class="btn btn-success" type="submit" value="Generar Orden De Corrida">
+    </form>
+    <br>
+    <br>
+    {% endblock %}

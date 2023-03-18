@@ -1,0 +1,102 @@
+{% extends "base_datatable.html" %}
+{% block content %}
+
+
+
+
+
+<script>
+$(document).ready(function() {
+    var groupColumn = 1;
+    var table = $('#example').DataTable({
+        "columnDefs": [
+            { "visible": false, "targets": groupColumn }
+        ],
+        "order": [[ groupColumn, 'asc' ]],
+        "displayLength": 25,
+        "drawCallback": function ( settings ) {
+            var api = this.api();
+            var rows = api.rows( {page:'current'} ).nodes();
+            var last=null;
+            api.column(groupColumn, {page:'current'} ).data().each( function ( group, i ) {
+                if ( last !== group ) {
+                    $(rows).eq( i ).before(
+                        '<tr class="group"><td colspan="7">'+group+'</td></tr>'
+                    );
+ 
+                    last = group;
+                }
+            }
+             );
+        }
+    } );
+ 
+    // Order by the grouping
+    $('#example tbody').on( 'click', 'tr.group', function () {
+        var currentOrder = table.order()[0];
+        if ( currentOrder[0] === groupColumn && currentOrder[1] === 'asc' ) {
+            table.order( [ groupColumn, 'desc' ] ).draw();
+        }
+        else {
+            table.order( [ groupColumn, 'asc' ] ).draw();
+        }
+    } );
+} );
+
+
+</script>
+<table id="example" class="display" style="width:100%">
+        <thead>
+            <tr>
+                <th>Descripcion</th>
+                <th>Tipo de Espuma</th>
+                <th>No.Bloque</th>
+                <th>Lote</th>
+                <th>Largo</th>
+                <th>Ancho</th>
+                <th>Alto</th>
+                <th>Peso</th>
+                <th>Disponible</th>
+                <th>Baja</th>
+                
+            </tr>
+        </thead>
+        <tbody>
+            {% for bloque in bloques_disponibles %}
+            <tr>
+                <td>{{bloque.elemento_corrida.bloqueMedidas}} </td>
+                <td > <b> {{bloque.elemento_corrida.bloqueMedidas.tipo_de_espuma.tipo_de_espuma}} </b></td>
+                <td>{{bloque.no_de_bloque}} </td>
+                <td>{{bloque.elemento_corrida.lote.no_de_lote}} </td>
+                <td>{{bloque.largo_caliente}} </td>
+                <td>{{bloque.ancho_caliente}} </td>
+                <td>{{bloque.alto_caliente}} </td>
+                <td>{{bloque.peso_caliente}} </td>
+                {% if bloque.disponible %}
+                    <td class="text-center align-middle"> <font color="green">&#10003; </font>   </td>
+                {% else %}
+                    <td class="text-center align-middle" > <font color="red"> X </font> </td>
+                {%endif%}
+                <td class="text-center"><a class="btn btn-danger" href="{% url 'corrida:bloque_no_disponible' bloque.id %}" role="button"> Dar de baja </a></td>
+               <!-- comment -->
+
+            </tr>
+           {%endfor%}
+        <tfoot>
+            <tr>
+                <th>Descripcion</th>
+                <th>Tipo de Espuma</th>
+                <th>Lote</th>
+                <th>Largo</th>
+                <th>Ancho</th>
+                <th>Alto</th>
+                <th>Peso</th>
+                <th>Baja</th>
+                    
+            </tr>
+        </tfoot>
+    </table>
+
+</div>
+
+{%endblock%}

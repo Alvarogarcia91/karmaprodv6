@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% block content %}
+
+
+
+<br>
+<hr class="style1">
+<h1 class="text-info">Ordenes</h1>
+    {% for corrida in corridasFront %}
+    <table class="table table-hover" >
+        <thead>
+            <tr>
+            <th class="text-center" > No.Orden</th>
+            <th class="text-center" > Tipo de espuma</th>
+            <th class="text-center" > Descripcion </th>
+            <th class="text-center" > Tipo de unidad </th>
+            <th class="text-center" > Forma </th>
+            <th class="text-center" > Cantidad </th>
+            
+            </tr>
+        </thead>
+
+        <tbody>
+            
+            {% for elementoCorrida in corrida %}
+
+            <tr>
+                <td class="text-center" >{{ elementoCorrida.corrida }}</td>
+                <td class="text-center" >{{ elementoCorrida.bloqueMedidas.tipo_de_espuma }}</td>
+                <td class="text-center" >{{ elementoCorrida.bloqueMedidas.descripcion }}</td>
+                <td class="text-center" >{{ elementoCorrida.bloqueMedidas.tipo_de_unidad }}</td>
+                <td class="text-center" >{{ elementoCorrida.bloqueMedidas.forma }}</td>
+                <td class="text-center" >{{elementoCorrida.cantidad}}</td>
+                
+            </tr>
+            {% endfor %}
+            <br>
+            <hr class="style1">
+        </tbody>
+    </table>
+   
+    
+    {% endfor %}
+
+
+  
+{%endblock%}
