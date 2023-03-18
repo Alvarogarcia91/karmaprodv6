@@ -361,7 +361,7 @@ def corrida_producida(request,corrida_id):
 	return render(request ,'ordenes/corrida_producida.html' ,context )
 
 def corridas_producidas(request):
-	corridas_producidas = Corrida.objects.filter(producto_terminado= True).order_by('created')
+	corridas_producidas = Corrida.objects.filter(producto_terminado= True).order_by('-created')
 	context ={
 		'corridas_producidas': corridas_producidas
 
