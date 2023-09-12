@@ -378,7 +378,7 @@ def inventario(request):
 		medidas = BloqueMedidas.objects.filter(tipo_de_espuma = tipo_de_espuma).filter(tipo_de_unidad__tipo_de_unidad = 'Normal')
 		tipos_con_medidas.append( { 'tipo_de_espuma':tipo_de_espuma,'medidas_con_count':list() } )
 		for medida in medidas:
-			bloques_producidos_count = BloqueProducido.objects.filter(elemento_corrida__bloqueMedidas = medida).count()
+			bloques_producidos_count = BloqueProducido.objects.filter(elemento_corrida__bloqueMedidas = medida,disponible=True).count()
 			tipos_con_medidas[i]['medidas_con_count'].append({'medida':medida,'bloques_producidos_count':bloques_producidos_count})
 	print(tipos_con_medidas)
 	
