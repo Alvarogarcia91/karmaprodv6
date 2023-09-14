@@ -6,6 +6,7 @@
         <tr>
             <th>Descripcion Medida</th>
             <th>ID</th>
+            <th>Forma</th>
             <th>Tipo de Espuma</th>
             <th>No.Bloque</th>
             <th>Lote</th>
@@ -23,6 +24,7 @@
         <tr>
             <td>{{bloque.elemento_corrida.bloqueMedidas}} </td>
             <td>{{bloque.id}} </td>
+            <td>{{bloque.elemento_corrida.bloqueMedidas.forma}} </td>
             <td > <b> {{bloque.elemento_corrida.bloqueMedidas.tipo_de_espuma.tipo_de_espuma}} </b></td>
             <td>{{bloque.no_de_bloque}} </td>
             <td>{{bloque.elemento_corrida.lote.no_de_lote}} </td>
@@ -42,13 +44,17 @@
        {%endfor%}
     <tfoot>
         <tr>
-            <th>Descripcion</th>
+            <th>Descripcion Medida</th>
+            <th>ID</th>
+            <th>Forma</th>
             <th>Tipo de Espuma</th>
+            <th>No.Bloque</th>
             <th>Lote</th>
             <th>Largo</th>
             <th>Ancho</th>
             <th>Alto</th>
             <th>Peso</th>
+            <th>Disponible</th>
             <th>Baja</th>
                 
         </tr>
