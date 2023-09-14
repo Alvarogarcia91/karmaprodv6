@@ -46,6 +46,7 @@ urlpatterns = [
 
     #Ajustador de inventario
     path('ajustador/', views.ajustador, name='ajustador'),
+    path('ajustador_infinito/', views.ajustador_infinito, name='ajustador_infinito'),
 
 
 ]

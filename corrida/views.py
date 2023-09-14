@@ -486,3 +486,12 @@ def ajustador(request):
         'page_obj': page_obj
     }
     return render(request, 'ordenes/ajustador.html', context)
+
+#ajustador sin paginacion , da todos los disponibles pero son un CHINGO
+#http://127.0.0.1:8000/corrida/ajustador_infinito/
+def ajustador_infinito(request):
+	bloques_disponibles = BloqueProducido.objects.filter(disponible = True).prefetch_related('elemento_corrida__bloqueMedidas__tipo_de_espuma').prefetch_related('elemento_corrida__lote')
+	context ={
+				'bloques_disponibles':bloques_disponibles,
+	}
+	return render(request,'ordenes/ajustador_infinito.html',context)
