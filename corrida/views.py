@@ -470,3 +470,10 @@ def bloque_no_disponible(request, bloque_id):
 	bloque.disponible = False
 	bloque.save()
 	return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
+
+def ajustador(request):
+	bloques_disponibles = BloqueProducido.objects.filter(disponible = True).prefetch_related('elemento_corrida__bloqueMedidas__tipo_de_espuma').prefetch_related('elemento_corrida__lote')
+	context ={
+				'bloques_disponibles':bloques_disponibles,
+	}
+	return render(request,'ordenes/ajustador.html',context)

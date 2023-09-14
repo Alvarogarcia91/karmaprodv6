@@ -44,5 +44,8 @@ urlpatterns = [
 
     path('bloque_no_disponible/<int:bloque_id>', views.bloque_no_disponible, name='bloque_no_disponible'),
 
+    #Ajustador de inventario
+    path('ajustador/', views.ajustador, name='ajustador'),
+
 
 ]
