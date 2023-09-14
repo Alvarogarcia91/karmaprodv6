@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 {% block content %}
- 
+
 <table id="example" class="display" style="width:100%">
     <thead>
         <tr>
@@ -19,7 +19,7 @@
         </tr>
     </thead>
     <tbody>
-        {% for bloque in bloques_disponibles %}
+        {% for bloque in page_obj %}
         <tr>
             <td>{{bloque.elemento_corrida.bloqueMedidas}} </td>
             <td>{{bloque.id}} </td>
@@ -34,12 +34,11 @@
                 <td class="text-center align-middle"> <font color="green">&#10003; </font>   </td>
             {% else %}
                 <td class="text-center align-middle" > <font color="red"> X </font> </td>
-            {%endif%}
+            {% endif %}
             <td class="text-center"><a class="btn btn-danger" href="{% url 'corrida:bloque_no_disponible' bloque.id %}" role="button"> Dar de baja </a></td>
-           <!-- comment -->
-
         </tr>
-       {%endfor%}
+        {% endfor %}
+    </tbody>
     <tfoot>
         <tr>
             <th>Descripcion</th>
@@ -55,5 +54,23 @@
     </tfoot>
 </table>
 
+<!-- Agregamos navegación de paginación -->
+<div class="pagination">
+    <span class="step-links">
+        {% if page_obj.has_previous %}
+            <a href="?page=1">&laquo; primer pagina</a>
+            <a href="?page={{ page_obj.previous_page_number }}">anterior</a>
+        {% endif %}
 
-{%endblock%}
+        <span class="current">
+            Pag {{ page_obj.number }} de {{ page_obj.paginator.num_pages }}.
+        </span>
+
+        {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}">siguiente  </a>
+            <a href="?page={{ page_obj.paginator.num_pages }}">ultima pag &raquo;</a>
+        {% endif %}
+    </span>
+</div>
+
+{% endblock %}
