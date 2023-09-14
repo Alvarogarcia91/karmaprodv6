@@ -475,7 +475,7 @@ def bloque_no_disponible(request, bloque_id):
 
 
 def ajustador(request):
-    bloques_disponibles = BloqueProducido.objects.filter(disponible=True).prefetch_related('elemento_corrida__bloqueMedidas__tipo_de_espuma').prefetch_related('elemento_corrida__lote')
+    bloques_disponibles = BloqueProducido.objects.filter(disponible=True).order_by('-created').prefetch_related('elemento_corrida__bloqueMedidas__tipo_de_espuma').prefetch_related('elemento_corrida__lote')
 
     # Agregamos paginación aquí
     paginator = Paginator(bloques_disponibles, 100)  # bloques por página
@@ -490,7 +490,7 @@ def ajustador(request):
 #ajustador sin paginacion , da todos los disponibles pero son un CHINGO
 #http://127.0.0.1:8000/corrida/ajustador_infinito/
 def ajustador_infinito(request):
-	bloques_disponibles = BloqueProducido.objects.filter(disponible = True).prefetch_related('elemento_corrida__bloqueMedidas__tipo_de_espuma').prefetch_related('elemento_corrida__lote')
+	bloques_disponibles = BloqueProducido.objects.filter(disponible = True).order_by('-created').prefetch_related('elemento_corrida__bloqueMedidas__tipo_de_espuma').prefetch_related('elemento_corrida__lote')
 	context ={
 				'bloques_disponibles':bloques_disponibles,
 	}
