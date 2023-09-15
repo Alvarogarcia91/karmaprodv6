@@ -462,17 +462,16 @@ def bloques_disponibles(request):
 	return render(request,'bloques/bloques_disponibles.html',context)
 
 def bloque_no_disponible(request, bloque_id):
-	bloque = BloqueProducido.objects.get(id=bloque_id)
-	bloque.disponible = False
-	bloque.save()
-	return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
+    bloque = BloqueProducido.objects.get(id=bloque_id)
+    bloque.disponible = False
+    bloque.save(update_fields=['disponible'])  # Solo guarda el campo 'disponible'
+    return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
 
 def bloque_si_disponible(request, bloque_id):
-	bloque = BloqueProducido.objects.get(id=bloque_id)
-	bloque.disponible = True
-	bloque.save()
-	return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
-
+    bloque = BloqueProducido.objects.get(id=bloque_id)
+    bloque.disponible = True
+    bloque.save(update_fields=['disponible'])  # Solo guarda el campo 'disponible'
+    return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
 
 def ajustador(request):
     bloques_disponibles = BloqueProducido.objects.filter(disponible=True).order_by('-created').prefetch_related('elemento_corrida__bloqueMedidas__tipo_de_espuma').prefetch_related('elemento_corrida__lote')
