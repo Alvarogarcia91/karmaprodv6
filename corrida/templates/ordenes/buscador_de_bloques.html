@@ -1,0 +1,81 @@
+{% extends "base.html" %}
+{% block content %}
+
+<br>
+<form method="get">
+    <label for="no_de_lote">Buscar por número de lote:</label>
+    <input type="text" id="no_de_lote" name="no_de_lote">
+    <button type="submit">Buscar</button>
+</form>
+<br>
+ 
+<table class="table table-hover table-sm"  >
+    <thead>
+        <tr>
+            <th class="text-center align-middle">Descripcion Medida</th>
+            <th class="text-center align-middle">ID</th>
+            <th class="text-center align-middle">Forma</th>
+            <th class="text-center align-middle w-25">Tipo de Espuma</th>
+            <th class="text-center align-middle">No.Bloque</th>
+            <th class="text-center align-middle w-50">Lote</th>
+            <th class="text-center align-middle">Largo</th>
+            <th class="text-center align-middle">Ancho</th>
+            <th class="text-center align-middle">Alto</th>
+            <th class="text-center align-middle">Peso</th>
+            <th class="text-center align-middle">Disponible</th>
+            <th class="text-center align-middle">Baja</th>
+            <th class="text-center align-middle">Alta</th>
+            
+        </tr>
+    </thead>
+    <tbody>
+        {% for bloque in bloques_disponibles %}
+        <tr>
+            <td class="text-center align-middle">{{bloque.elemento_corrida.bloqueMedidas}} </td>
+            <td class="text-center align-middle">{{bloque.id}} </td>
+            <td class="text-center align-middle">{{bloque.elemento_corrida.bloqueMedidas.forma}} </td>
+            <td class="text-center align-middle"> <b> {{bloque.elemento_corrida.bloqueMedidas.tipo_de_espuma.tipo_de_espuma}} </b></td>
+            <td class="text-center align-middle">{{bloque.no_de_bloque}} </td>
+            <td class="text-center align-middle">{{bloque.elemento_corrida.lote.no_de_lote}} </td>
+            <td class="text-center align-middle">{{bloque.largo_caliente}} </td>
+            <td class="text-center align-middle">{{bloque.ancho_caliente}} </td>
+            <td class="text-center align-middle">{{bloque.alto_caliente}} </td>
+            <td class="text-center align-middle">{{bloque.peso_caliente}} </td>
+            {% if bloque.disponible %}
+                <td class="text-center align-middle"> <font color="green">&#10003; </font>   </td>
+            {% else %}
+                <td class="text-center align-middle" > <font color="red"> X </font> </td>
+            {%endif%}
+            <td class="text-center"><a class="btn btn-danger" href="{% url 'corrida:bloque_no_disponible' bloque.id %}" role="button"> Dar de baja </a></td>
+            <td class="text-center"><a class="btn btn-success" href="{% url 'corrida:bloque_si_disponible' bloque.id %}" role="button"> Dar de Alta </a></td>
+           <!-- comment -->
+
+        </tr>
+        {% empty %}
+        <tr>
+            
+            <td colspan="12" class="badge badge-info badge-pill">Escribe el lote que estas buscando o No se encontraron bloques.</td>
+        </tr>
+       {%endfor%}
+    <tfoot>
+        <tr>
+            <th class="text-center align-middle">Descripcion Medida</th>
+            <th class="text-center align-middle">ID</th>
+            <th class="text-center align-middle">Forma</th>
+            <th class="text-center align-middle">Tipo de Espuma</th>
+            <th class="text-center align-middle">No.Bloque</th>
+            <th class="text-center align-middle">Lote</th>
+            <th class="text-center align-middle">Largo</th>
+            <th class="text-center align-middle">Ancho</th>
+            <th class="text-center align-middle">Alto</th>
+            <th class="text-center align-middle">Peso</th>
+            <th class="text-center align-middle">Disponible</th>
+            <th class="text-center align-middle">Baja</th>
+            <th class="text-center align-middle">Alta</th>
+                
+        </tr>
+    </tfoot>
+</table>
+
+
+{%endblock%}

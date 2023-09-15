@@ -82,7 +82,7 @@ DATABASES = {
         'NAME': 'postgres',
         'USER': 'postgres',
         'PASSWORD': 'Hre2x4evJVMnDdqH',
-        'HOST': '3.142.74.10',
+        'HOST': '18.224.165.70',
         'PORT': 5432,
     }
 }
@@ -92,6 +92,7 @@ DATABASES = {
 
 #temrporal de pruebas
 #3.142.74.10
+#18.224.165.70
 
 #ip de DEV
 #18.189.242.102

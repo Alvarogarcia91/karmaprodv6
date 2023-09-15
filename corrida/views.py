@@ -473,6 +473,12 @@ def bloque_no_disponible(request, bloque_id):
 	bloque.save()
 	return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
 
+def bloque_si_disponible(request, bloque_id):
+	bloque = BloqueProducido.objects.get(id=bloque_id)
+	bloque.disponible = True
+	bloque.save()
+	return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
+
 
 def ajustador(request):
     bloques_disponibles = BloqueProducido.objects.filter(disponible=True).order_by('-created').prefetch_related('elemento_corrida__bloqueMedidas__tipo_de_espuma').prefetch_related('elemento_corrida__lote')
@@ -495,3 +501,20 @@ def ajustador_infinito(request):
 				'bloques_disponibles':bloques_disponibles,
 	}
 	return render(request,'ordenes/ajustador_infinito.html',context)
+
+
+def buscador_bloques(request):
+    no_de_lote = request.GET.get('no_de_lote')
+
+    # Inicializa la consulta con una lista vacía
+    bloques_disponibles = []
+
+    if no_de_lote:
+        bloques_disponibles = BloqueProducido.objects.filter( elemento_corrida__lote__no_de_lote__icontains=no_de_lote).order_by('-created').prefetch_related('elemento_corrida__bloqueMedidas__tipo_de_espuma').prefetch_related('elemento_corrida__lote')
+
+    context = {
+        'bloques_disponibles': bloques_disponibles,
+    }
+    return render(request, 'ordenes/buscador_de_bloques.html', context)
+
+

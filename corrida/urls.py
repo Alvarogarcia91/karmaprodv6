@@ -43,10 +43,15 @@ urlpatterns = [
     path('bloques_disponibles/', views.bloques_disponibles, name='bloques_disponibles'),
 
     path('bloque_no_disponible/<int:bloque_id>', views.bloque_no_disponible, name='bloque_no_disponible'),
+    
+    path('bloque_si_disponible/<int:bloque_id>/', views.bloque_si_disponible, name='bloque_si_disponible'),
 
     #Ajustador de inventario
     path('ajustador/', views.ajustador, name='ajustador'),
     path('ajustador_infinito/', views.ajustador_infinito, name='ajustador_infinito'),
+    path('buscador_bloques/', views.buscador_bloques, name='buscador_bloques'),
+
+    
 
 
 ]
