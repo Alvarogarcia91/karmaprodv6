@@ -382,14 +382,9 @@ def inventario(request):
 		for medida in medidas:
 			bloques_producidos_count = BloqueProducido.objects.filter(elemento_corrida__bloqueMedidas = medida,disponible=True).count()
 			tipos_con_medidas[i]['medidas_con_count'].append({'medida':medida,'bloques_producidos_count':bloques_producidos_count})
-	print(tipos_con_medidas)
+	#print(tipos_con_medidas)
 	
-
-
-
-
 	# bloques_disponibles_sin_defecto = BloqueProducido.objects.filter( no_de_bloque = '4')
-
 
 	# bloques_disponibles = BloqueProducido.objects.all()
 
@@ -408,7 +403,6 @@ def inventario(request):
 	# este filtra la cantidad =20
 	# bloques_disponibles = BloqueProducido.objects.filter( elemento_corrida__cantidad = '20')
 
-
 	# si funciona, filtra los no de blocque
 	# bloques_disponibles = BloqueProducido.objects.filter( no_de_bloque = '4')
 
@@ -416,7 +410,7 @@ def inventario(request):
 	
 	# num_bloques = 
 	# result = Block.objects.filter(tipo_espuma='24-30').count()
-	print(bloques_disponibles_sin_defecto)
+	#print(bloques_disponibles_sin_defecto)
 	context ={
 		'bloques_disponibles_sin_defecto': bloques_disponibles_sin_defecto,
 		'bloques_disponibles_con_defecto':bloques_disponibles_con_defecto,
