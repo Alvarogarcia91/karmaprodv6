@@ -366,7 +366,7 @@ def corridas_producidas(request):
     corridas_producidas = Corrida.objects.filter(producto_terminado=True).order_by('-created')
     
     # Configurar la paginación
-    paginator = Paginator(corridas_producidas, 20)  # 10 corridas por página
+    paginator = Paginator(corridas_producidas, 30)  # 30 corridas por página
     
     # Obtener el número de página desde la URL
     page_number = request.GET.get('page')
