@@ -363,12 +363,34 @@ def corrida_producida(request,corrida_id):
 	return render(request ,'ordenes/corrida_producida.html' ,context )
 
 def corridas_producidas(request):
-	corridas_producidas = Corrida.objects.filter(producto_terminado= True).order_by('-created')
-	context ={
-		'corridas_producidas': corridas_producidas
+    corridas_producidas = Corrida.objects.filter(producto_terminado=True).order_by('-created')
+    
+    # Configurar la paginación
+    paginator = Paginator(corridas_producidas, 20)  # 10 corridas por página
+    
+    # Obtener el número de página desde la URL
+    page_number = request.GET.get('page')
+    
+    # Obtener las corridas para la página actual
+    page_obj = paginator.get_page(page_number)
 
-	}
-	return render(request ,'ordenes/corridas_producidas.html' ,context )
+    context = {
+        'corridas_producidas': page_obj,
+        
+    }
+
+    return render(request, 'ordenes/corridas_producidas.html', context)
+
+# def corridas_producidas(request):
+# 	corridas_producidas = Corrida.objects.filter(producto_terminado= True).order_by('-created')
+# 	print(corridas_producidas),
+# 	context ={
+# 		'corridas_producidas': corridas_producidas,
+    		
+
+# 	}
+	
+# 	return render(request ,'ordenes/corridas_producidas.html' ,context )
 
 
 def inventario(request):
