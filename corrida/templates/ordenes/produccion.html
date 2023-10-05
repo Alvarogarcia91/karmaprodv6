@@ -265,8 +265,8 @@
                             <th> OK </th>
                             <th> Observacion </th>
                             <th> Comentario </th>
-                            <th> Volumen </th>
                             <th> Densidad </th>
+                            <th> Volumen </th>
                             
                             </tr>
                         </thead>
@@ -291,9 +291,10 @@
 
                                 {%endif%}
                                 <td>{{bloque.get_defecto_display}}   </td>
-                                <td>{{bloque.comentario}}  </td>
-                                <td> <span class="">{{bloque.volumen}}</span>  </td>
+                                <td class="col col-sm-2" >{{bloque.comentario}}  </td>
                                 <td><span class="{{bloque.densidad_class}}"> {{bloque.densidad}}  </span></td>
+                                <td> <span class="">{{bloque.volumen}}</span>  </td>
+                                
                                 
                             </tr>
 
