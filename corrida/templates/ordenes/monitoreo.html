@@ -62,7 +62,7 @@
                 <div class="col-6">
                     <div class="card mb-4 box-shadow">
                         <div class="card-body">
-                            <h1 class="card-title">{{bloques_rechazados_count}} </h1>
+                            <h1 class="card-title text-danger">{{bloques_rechazados_count}} </h1>
                             <ul class="list-unstyled mt-3 mb-4">
                             <li>bloques rechazados</li>
                             </ul>
@@ -74,8 +74,8 @@
             <!-- Row de Heading del visor -->
             <div class="row">
                 <div class="col-12 offset-0">
-                    <p><b>Bloques Producidos de: <font color="green"> {{elementoCorrida.bloqueMedidas.tipo_de_espuma}}</font>
-                    Numero de Lote: <font color="blue">{{elementoCorrida.lote.no_de_lote}}</font> </p></b>
+                    <p><b>Bloques Producidos: <font color="green"> {{elementoCorrida.bloqueMedidas.tipo_de_espuma}}</font>
+                     <font color="blue">{{elementoCorrida.lote.no_de_lote}}</font> </p></b>
                 </div>
             </div>
 
@@ -84,7 +84,7 @@
                         <thead class="thead-light">
                             <tr class="table-primary">
                             <th> # </th>
-                            <th> TDE </th>
+                            <th> Tipo De Espuma </th>
                             <th> Lote </th>
                             <th> Largo </th>
                             <th> Ancho </th>
@@ -95,8 +95,9 @@
                             <th> OK </th>
                             <th> Observacion </th>
                             <th> Comentario </th>
-                            <th> Volumen </th>
                             <th> Densidad </th>
+                            <th> Volumen </th>
+                            
                             
                             </tr>
                         </thead>
@@ -107,23 +108,21 @@
                             <tr >
                                 <td>{{bloque.no_de_bloque}}  </td>
                                 <td>{{bloque.elemento_corrida.bloqueMedidas.tipo_de_espuma}}  </td>
-                                <td>{{bloque.elemento_corrida.lote.no_de_lote}}  </td>
+                                <td class="text-nowrap" >{{bloque.elemento_corrida.lote.no_de_lote}}  </td>
                                 <td> <span class="{{bloque.largo_caliente_class}}"> {{bloque.largo_caliente}} </span>  </td>
                                 <td> <span class="{{bloque.ancho_caliente_class}}"> {{bloque.ancho_caliente}} </span> </td>
                                 <td> <span class="{{bloque.alto_caliente_class}}"> {{bloque.alto_caliente}} </span>    </td> 
                                 <td>{{bloque.flujo_de_aire_caliente}}  </td>
                                 <td>{{bloque.peso_caliente}}  </td>
-                                
-                                {% if bloque.revision_calidad == True %}
-                                    <td>   </td>
-                                {% else %}
-                                    <td> X </td>
-
-                                {%endif%}
+                                    {% if bloque.revision_calidad == True %}
+                                <td>   </td>
+                                    {% else %}
+                                <td class="text-center" > <font color="red"> X </font> </td>
+                                    {%endif%}
                                 <td>{{bloque.get_defecto_display}}   </td>
-                                <td>{{bloque.comentario}}  </td>
-                                <td> <span class="">{{bloque.volumen}}</span>  </td>
+                                <td class="col col-sm-2">{{bloque.comentario}}  </td>
                                 <td><span class="{{bloque.densidad_class}}"> {{bloque.densidad}}  </span></td>
+                                <td> <span class="">{{bloque.volumen}}</span>  </td>
                                 
                             </tr>
 
