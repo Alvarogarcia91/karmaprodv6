@@ -94,6 +94,8 @@ DATABASES = {
 #3.142.74.10
 #18.224.165.70
 
+#18.118.129.184
+
 #ip de DEV
 #18.189.242.102
 
@@ -121,15 +123,19 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # Internationalization
 # https://docs.djangoproject.com/en/2.2/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'es-MX'
 
 TIME_ZONE = 'America/Monterrey'
 
 USE_I18N = True
 
-USE_L10N = True
+USE_L10N = False
 
 USE_TZ = True
+
+DATE_FORMAT = 'j F, Y'
+
+DATETIME_FORMAT = 'j F, Y, P'
 
 
 # Static files (CSS, JavaScript, Images)

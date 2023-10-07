@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends "base_izq.html" %}
 {% block content %}
 
 <br>
@@ -17,12 +17,15 @@
             <th class="text-center align-middle">Forma</th>
             <th class="text-center align-middle w-25">Tipo de Espuma</th>
             <th class="text-center align-middle">No.Bloque</th>
-            <th class="text-center align-middle w-50">Lote</th>
+            <th class="text-center align-middle w-50 text-nowrap">Lote</th>
+            <th class="text-center align-middle">Fecha Creado</th>
             <th class="text-center align-middle">Largo</th>
             <th class="text-center align-middle">Ancho</th>
             <th class="text-center align-middle">Alto</th>
             <th class="text-center align-middle">Peso</th>
             <th class="text-center align-middle">Disponible</th>
+            <th class="text-center align-middle">Defecto</th>
+            <th class="text-center align-middle text-nowrap">Comentario de corrida</th>
             <th class="text-center align-middle">Baja</th>
             <th class="text-center align-middle">Alta</th>
             
@@ -34,9 +37,10 @@
             <td class="text-center align-middle">{{bloque.elemento_corrida.bloqueMedidas}} </td>
             <td class="text-center align-middle">{{bloque.id}} </td>
             <td class="text-center align-middle">{{bloque.elemento_corrida.bloqueMedidas.forma}} </td>
-            <td class="text-center align-middle"> <b> {{bloque.elemento_corrida.bloqueMedidas.tipo_de_espuma.tipo_de_espuma}} </b></td>
+            <td class="text-center align-middle text-nowrap"> <b> {{bloque.elemento_corrida.bloqueMedidas.tipo_de_espuma.tipo_de_espuma}} </b></td>
             <td class="text-center align-middle">{{bloque.no_de_bloque}} </td>
-            <td class="text-center align-middle">{{bloque.elemento_corrida.lote.no_de_lote}} </td>
+            <td class="text-center align-middle text-nowrap ">{{bloque.elemento_corrida.lote.no_de_lote}} </td>
+            <td class="text-center align-middle text-nowrap">{{bloque.elemento_corrida.lote.created}} </td>
             <td class="text-center align-middle">{{bloque.largo_caliente}} </td>
             <td class="text-center align-middle">{{bloque.ancho_caliente}} </td>
             <td class="text-center align-middle">{{bloque.alto_caliente}} </td>
@@ -46,6 +50,8 @@
             {% else %}
                 <td class="text-center align-middle" > <font color="red"> X </font> </td>
             {%endif%}
+            <td class="text-center align-middle text-nowrap ">{{bloque.get_defecto_display}}   </td>
+            <td class= "text-center align-middle w-50 " >{{bloque.comentario}}  </td>
             <td class="text-center"><a class="btn btn-danger" href="{% url 'corrida:bloque_no_disponible' bloque.id %}" role="button"> Dar de baja </a></td>
             <td class="text-center"><a class="btn btn-success" href="{% url 'corrida:bloque_si_disponible' bloque.id %}" role="button"> Dar de Alta </a></td>
            <!-- comment -->
