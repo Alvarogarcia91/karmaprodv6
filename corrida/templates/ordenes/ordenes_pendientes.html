@@ -75,6 +75,7 @@
     {% for corrida in corridas_pendientes %}
     <h3>No de orden: {{corrida.id}}</h3>
     <h3>Fecha programada: {{corrida.fecha_programada.date}}</h3>
+    <h3 class="text-info" >Cedis : <b> {{corrida.cedis}} </b></h3>
     <table class="table table-hover table-sm" >
         <thead>
             <tr>

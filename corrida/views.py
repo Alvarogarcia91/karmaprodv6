@@ -33,7 +33,8 @@ def nueva_corrida(request, forma_id=1, tipo_de_espuma_id=0):
 
     corrida = _corrida_actual()
     tipos_de_espuma = Tipos_de_Espuma.objects.all()
-
+    cedis_list = Corrida.CEDIS_CHOICES
+    
     conflicto = False
     try:
         elementos_corrida = ElementoCorrida.objects.filter(corrida = corrida)
@@ -47,6 +48,7 @@ def nueva_corrida(request, forma_id=1, tipo_de_espuma_id=0):
         'elementos_corrida': elementos_corrida,
         'tipos_de_espuma':tipos_de_espuma,
         'forma_id':forma_id,
+		'cedis_list': cedis_list,
     }
     return render(request,'espumas/espumas.html',context)
 
@@ -74,7 +76,9 @@ def orden_de_corrida(request):
 		cantidades = request.POST.getlist('cantidades')
 		ids = request.POST.getlist('elementoIds')
 		fecha_programada = request.POST.get('fecha_programada')
+		cedis = request.POST.get('cedis')
 		print(cantidades)
+		
 		print(ids)
 		for index, cantidad in enumerate(cantidades):
 			elementoCorrida = ElementoCorrida.objects.get(id=ids[index])
@@ -83,6 +87,7 @@ def orden_de_corrida(request):
 			print("Save successful perro")
 		corrida = _corrida_actual()
 		corrida.fecha_programada = fecha_programada
+		corrida.cedis = cedis
 		corrida.pre_orden = False
 		corrida.pendiente_produccion = True
 		corrida.save()

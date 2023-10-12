@@ -5,6 +5,11 @@ import datetime
 from decimal import *
 
 class Corrida(models.Model):
+	CEDIS_CHOICES=[
+		('Monterrey', 'Monterrey'),
+        ('Salinas', 'Salinas'),
+	]
+
 	#corrida_id = models.CharField(max_length=250, blank=True)
 	created = models.DateTimeField(auto_now_add = True)
 	updated = models.DateTimeField(auto_now = True)
@@ -16,6 +21,7 @@ class Corrida(models.Model):
 	en_produccion = models.BooleanField(default = False)
 	cancelada = models.BooleanField(default = False)
 	producto_terminado = models.BooleanField(default = False)
+	cedis = models.CharField(max_length=122,choices=CEDIS_CHOICES, default='Monterrey')
 	
 	class Meta:
 		db_table = 'Corrida'

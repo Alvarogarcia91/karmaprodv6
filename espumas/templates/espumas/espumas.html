@@ -60,7 +60,17 @@
             {% csrf_token %}
             <label class="col-sm-2 col-form-label"><b> Fecha a producir:</b></label> 
             <input required type="date" name="fecha_programada">
+            <label class="col-sm-1 col-form-label"><b>Cedis:</b></label>
+            <select class="col-sm-2" id="cedis" name="cedis">
+                {% for cedis in cedis_list %}
+                    <option value="{{ cedis.0 }}">{{ cedis.1 }}</option>
+                {% endfor %}
+            </select>
+
+            
             {% for elementoCorrida in elementos_corrida %}
+
+            
             <tr>
                 <td class="text-center">{{ elementoCorrida.bloqueMedidas.tipo_de_espuma }}</td>
                 <td class="text-center">{{ elementoCorrida.bloqueMedidas.descripcion }}</td>
