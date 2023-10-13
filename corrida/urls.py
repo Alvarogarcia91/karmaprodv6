@@ -36,6 +36,11 @@ urlpatterns = [
 
     path('lotes/', views.lotes, name='lotes'),
 
+    path('lotes_pendientes/', views.lotes_pendientes, name='lotes_pendientes'),
+    path('lotes_aprobados/', views.lotes_aprobados, name='lotes_aprobados'),
+    path('lotes_rechazados/', views.lotes_rechazados, name='lotes_rechazados'),
+    
+
     path('aprobar_lote/<int:lote_id>/', views.aprobar_lote, name='aprobar_lote'),
 
     path('dashboard/', views.dashboard_en_producion, name='dashboard'),

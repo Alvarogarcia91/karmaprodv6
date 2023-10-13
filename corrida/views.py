@@ -453,16 +453,63 @@ def dashboard_en_producion(request):
 	}
 	return render(request,'ordenes/dashboard_en_producion.html',context)
 
+
+#---Lotes Calidad---
 def lotes(request):
-	lotes_pendientes = Lote.objects.filter(pruebas_realizadas = False)
-	lotes_aprobados = Lote.objects.filter(pruebas_pasadas = True)
-	lotes_rechazados = Lote.objects.filter(pruebas_pasadas = False).filter(pruebas_realizadas = True)
-	context = {
-		'lotes_pendientes': lotes_pendientes,
-		'lotes_aprobados': lotes_aprobados,
-		'lotes_rechazados': lotes_rechazados,
-	}
-	return render(request,'ordenes/lotes.html', context)
+	return render(request,'ordenes/lotes.html')
+
+def lotes_pendientes(request):
+    lotes_pendientes = Lote.objects.filter(pruebas_realizadas=False).order_by('-created')
+
+    if not lotes_pendientes:
+        mensaje = "No hay lotes pendientes en este momento."
+        context = {
+            'mensaje': mensaje,
+        }
+        return render(request, 'ordenes/lotes_pendientes.html', context)
+
+    paginator = Paginator(lotes_pendientes, 15)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+
+    context = {
+        'lotes_pendientes': page_obj,
+    }
+    return render(request, 'ordenes/lotes_pendientes.html', context)
+
+def lotes_aprobados(request):
+    lotes_aprobados = Lote.objects.filter(pruebas_pasadas=True).order_by('-created')
+    
+    # Configurando el paginador
+    paginator = Paginator(lotes_aprobados, 25)  # Cambia el número según tus preferencias
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+    
+    context = {
+        'lotes_aprobados': page_obj,
+    }
+
+    if not lotes_aprobados:
+        context['no_lotes_aprobados'] = True
+
+    return render(request, 'ordenes/lotes_aprobados.html', context)
+
+def lotes_rechazados(request):
+    lotes_rechazados = Lote.objects.filter(pruebas_pasadas=False, pruebas_realizadas=True).order_by('-created')
+    
+    # Configurando el paginador
+    paginator = Paginator(lotes_rechazados, 25)  # Cambia el número según tus preferencias
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+    
+    context = {
+        'lotes_rechazados': page_obj,
+    }
+
+    if not lotes_rechazados:
+        context['no_lotes_rechazados'] = True
+
+    return render(request, 'ordenes/lotes_rechazados.html', context)
 
 def aprobar_lote(request, lote_id):
 	lote = Lote.objects.get(id=lote_id)
@@ -478,7 +525,7 @@ def aprobar_lote(request, lote_id):
 	if lote.dureza_capturada and lote.sag_factor_capturado and lote.densidad_capturada and lote.flujo_de_aire_astm_capturado:
 		lote.pruebas_realizadas = True
 	lote.save()
-	return redirect('corrida:lotes')
+	return redirect('corrida:lotes_pendientes')
 
 def bloques_disponibles(request):
 	#bloques_aprobados.filter(elemento_corrida__lote__pruebas_pasadas = True)

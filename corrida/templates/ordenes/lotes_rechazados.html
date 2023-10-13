@@ -1,0 +1,87 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h1 class="text-left text-info">Lotes Rechazados</h1>
+<br>
+<h3 class="text-left text-secondary">Seleciona una opción: </h3>    
+
+
+
+<table class="table table-sm">
+    <!-- ... (contenido de la tabla) ... -->
+</table>
+
+<div class="button-group">
+    <a class="btn btn-primary mr-2" href="{% url 'corrida:lotes_pendientes' %}">Lotes pendientes</a>
+    <a class="btn btn-success mr-2" href="{% url 'corrida:lotes_aprobados' %}">Lotes Aprobados</a>
+    <a class="btn btn-danger mr-2" href="{% url 'corrida:lotes_rechazados' %}">Lotes Rechazados</a>
+</div>
+<br>
+{% if no_lotes_rechazados %}
+    <div class="alert alert-info" role="alert">
+        No hay lotes rechazados en este momento.
+    </div>
+{% else %}
+    <!-- Paginación -->
+    <div class="pagination justify-content-center">
+        {% if lotes_rechazados.has_previous %}
+            <a class="btn btn-light mx-1" href="?page=1">Primero</a>
+            <a class="btn btn-light mx-1" href="?page={{ lotes_rechazados.previous_page_number }}">Anterior</a>
+        {% endif %}
+
+        <span class="btn btn-light mx-1">Página {{ lotes_rechazados.number }} de {{ lotes_rechazados.paginator.num_pages }}.</span>
+
+        {% if lotes_rechazados.has_next %}
+            <a class="btn btn-light mx-1" href="?page={{ lotes_rechazados.next_page_number }}">Siguiente</a>
+            <a class="btn btn-light mx-1" href="?page={{ lotes_rechazados.paginator.num_pages }}">Último</a>
+        {% endif %}
+    </div>
+    <br>
+
+    <table class="table table-sm">
+        <thead>
+            <tr>
+                <th class="text-center">No. de Lote</th>
+                <th class="text-center">Densidad</th>
+                <th class="text-center">Dureza</th>
+                <th class="text-center">Flujo de aire</th>
+                <th class="text-center">SAG Factor</th>               
+                
+            </tr>
+        </thead>
+        <tbody>
+            {% for lote in lotes_rechazados %}
+                <tr>
+                    <td class="text-left">{{ lote.no_de_lote }}</td>
+                    <td class="text-center">{{ lote.densidad_capturada }}</td>
+                    <td class="text-center">{{ lote.dureza_capturada }}</td>
+                    <td class="text-center">{{ lote.flujo_de_aire_astm_capturado }}</td>
+                    <td class="text-center">{{ lote.sag_factor_capturado }}</td>           
+                    
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <!-- Paginación -->
+    <div class="pagination justify-content-center">
+        {% if lotes_rechazados.has_previous %}
+            <a class="btn btn-light mx-1" href="?page=1">Primero</a>
+            <a class="btn btn-light mx-1" href="?page={{ lotes_rechazados.previous_page_number }}">Anterior</a>
+        {% endif %}
+
+        <span class="btn btn-light mx-1">Página {{ lotes_rechazados.number }} de {{ lotes_rechazados.paginator.num_pages }}.</span>
+
+        {% if lotes_rechazados.has_next %}
+            <a class="btn btn-light mx-1" href="?page={{ lotes_rechazados.next_page_number }}">Siguiente</a>
+            <a class="btn btn-light mx-1" href="?page={{ lotes_rechazados.paginator.num_pages }}">Último</a>
+        {% endif %}
+    </div>
+    <br>
+
+{% endif %}
+
+<br>
+
+{% endblock %}
